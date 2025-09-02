@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
   Building2,
@@ -7,8 +7,15 @@ import {
   Sparkles,
 } from "lucide-react";
 import { TiltCard } from "@/components/effects/TiltCard";
+import { useEffect, useState } from "react";
 
 export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
+  const rotatingStreams = ["Engineering", "Medical", "Commerce", "Arts", "IT"];
+  const [streamIdx, setStreamIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setStreamIdx((v) => (v + 1) % rotatingStreams.length), 2200);
+    return () => clearInterval(id);
+  }, []);
   return (
     <div className="bg-gradient-to-b from-background to-secondary/40">
       <section className="relative overflow-hidden">
@@ -93,7 +100,20 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
                   >
                     <div className="space-y-1">
                       <p className="text-sm/5 opacity-90">Recommended Stream</p>
-                      <p className="text-2xl font-bold">Engineering</p>
+                      <div className="h-8 sm:h-9 overflow-hidden">
+                        <AnimatePresence mode="wait">
+                          <motion.p
+                            key={rotatingStreams[streamIdx]}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className="text-2xl font-bold"
+                          >
+                            {rotatingStreams[streamIdx]}
+                          </motion.p>
+                        </AnimatePresence>
+                      </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-sm opacity-90">
