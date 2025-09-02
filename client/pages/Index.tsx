@@ -13,7 +13,10 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
   const rotatingStreams = ["Engineering", "Medical", "Commerce", "Arts", "IT"];
   const [streamIdx, setStreamIdx] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setStreamIdx((v) => (v + 1) % rotatingStreams.length), 2200);
+    const id = setInterval(
+      () => setStreamIdx((v) => (v + 1) % rotatingStreams.length),
+      2200,
+    );
     return () => clearInterval(id);
   }, []);
   return (
