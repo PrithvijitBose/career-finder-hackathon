@@ -32,20 +32,20 @@ export default function CollegeDirectory() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2 text-sm text-foreground/70"><Building2 className="h-4 w-4 text-indigo-600"/> College Directory</div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground"><Building2 className="h-4 w-4 text-indigo-600"/> College Directory</div>
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground/50"/>
-          <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search by district or name" className="w-72 rounded-md border bg-white pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-400"/>
+          <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search by district or name" className="w-72 rounded-md border bg-card pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-400"/>
         </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((col)=> (
-          <button key={col.id} onClick={()=>{setSelected(col); setOpen(true);}} className="rounded-2xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+          <button key={col.id} onClick={()=>{setSelected(col); setOpen(true);}} className="rounded-2xl border bg-card text-card-foreground p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
             <div className="text-lg font-semibold">{col.name}</div>
-            <div className="mt-1 text-sm text-foreground/70">{col.district}</div>
-            <div className="mt-2 text-xs text-foreground/60">Streams: {col.streams.join(", ")}</div>
-            <div className="mt-3 inline-flex rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">Rating: {col.rating.toFixed(1)}</div>
+            <div className="mt-1 text-sm text-muted-foreground">{col.district}</div>
+            <div className="mt-2 text-xs text-muted-foreground">Streams: {col.streams.join(", ")}</div>
+            <div className="mt-3 inline-flex rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">Rating: {col.rating.toFixed(1)}</div>
           </button>
         ))}
       </div>
@@ -59,7 +59,7 @@ export default function CollegeDirectory() {
                 <DialogDescription>{selected.district}</DialogDescription>
               </DialogHeader>
               <div className="mt-2 text-sm">Streams offered: {selected.streams.join(", ")}</div>
-              <div className="mt-2 inline-flex items-center gap-2 text-sm"><MapPin className="h-4 w-4"/> District: {selected.district}</div>
+              <div className="mt-2 inline-flex items-center gap-2 text-sm text-card-foreground"><MapPin className="h-4 w-4"/> District: {selected.district}</div>
               <div className="mt-2 text-sm">Rating: {selected.rating.toFixed(1)} / 5</div>
             </>
           )}
