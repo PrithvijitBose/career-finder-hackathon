@@ -38,11 +38,11 @@ export default function CourseExplorer() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2 text-sm text-foreground/70"><GraduationCap className="h-4 w-4 text-indigo-600"/> Course Explorer</div>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground"><GraduationCap className="h-4 w-4 text-indigo-600"/> Course Explorer</div>
         <div className="flex items-center gap-2">
-          <div className="inline-flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-sm">
-            <Filter className="h-4 w-4 text-foreground/60"/>
-            <label htmlFor="stream" className="text-foreground/70">Stream</label>
+          <div className="inline-flex items-center gap-2 rounded-md border bg-card px-3 py-2 text-sm">
+            <Filter className="h-4 w-4 text-muted-foreground"/>
+            <label htmlFor="stream" className="text-muted-foreground">Stream</label>
             <select id="stream" value={stream} onChange={(e)=>setStream(e.target.value as any)} className="bg-transparent outline-none">
               {STREAMS.map((s)=> <option key={s} value={s}>{s}</option>)}
             </select>
@@ -52,15 +52,15 @@ export default function CourseExplorer() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((course)=> (
-          <button key={course.id} onClick={()=>{setSelected(course); setOpen(true);}} className="group rounded-2xl border bg-white p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
+          <button key={course.id} onClick={()=>{setSelected(course); setOpen(true);}} className="group rounded-2xl border bg-card text-card-foreground p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">{course.title}</h3>
               <Badge variant="secondary">{course.stream}</Badge>
             </div>
-            <p className="mt-2 text-sm text-foreground/70">{course.description}</p>
-            <div className="mt-3 flex items-center gap-2 text-xs text-foreground/60">
-              <span className="rounded bg-indigo-50 px-2 py-1 text-indigo-700">{course.level}</span>
-              <span className="rounded bg-slate-100 px-2 py-1">{course.duration}</span>
+            <p className="mt-2 text-sm text-muted-foreground">{course.description}</p>
+            <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+              <span className="rounded bg-indigo-50 px-2 py-1 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">{course.level}</span>
+              <span className="rounded bg-slate-100 px-2 py-1 dark:bg-white/10">{course.duration}</span>
             </div>
           </button>
         ))}
@@ -76,12 +76,12 @@ export default function CourseExplorer() {
                   {selected.stream} • {selected.level} • {selected.duration}
                 </DialogDescription>
               </DialogHeader>
-              <div className="mt-2 text-sm text-foreground/80">{selected.description}</div>
+              <div className="mt-2 text-sm text-card-foreground">{selected.description}</div>
               <div className="mt-4">
                 <div className="mb-2 flex items-center gap-2 text-sm font-medium"><Briefcase className="h-4 w-4"/> Career paths</div>
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {selected.careers.map((c)=> (
-                    <li key={c} className="rounded-md border bg-secondary px-3 py-2 text-sm">{c}</li>
+                    <li key={c} className="rounded-md border bg-secondary px-3 py-2 text-sm text-card-foreground">{c}</li>
                   ))}
                 </ul>
               </div>
