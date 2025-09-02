@@ -60,62 +60,72 @@ function AppShell() {
 
   const content = useMemo(() => {
     return (
-      <Routes>
-        <Route
-          path="/"
-          element={<Home onStartQuiz={() => onNavigate("AptitudeTest")} />}
-        />
-        <Route
-          path="/aptitude"
-          element={
-            <AptitudeTest
-              onExploreCourses={() => onNavigate("CourseExplorer")}
-              onBrowseColleges={() => onNavigate("CollegeDirectory")}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+        >
+          <Routes>
+            <Route
+              path="/"
+              element={<Home onStartQuiz={() => onNavigate("AptitudeTest")} />}
             />
-          }
-        />
-        <Route path="/courses" element={<CourseExplorer />} />
-        <Route path="/colleges" element={<CollegeDirectory />} />
-        <Route
-          path="/profile"
-          element={
-            <PlaceholderPage
-              title="Your Profile"
-              description="View your timeline and saved items. Ask me to build it next!"
+            <Route
+              path="/aptitude"
+              element={
+                <AptitudeTest
+                  onExploreCourses={() => onNavigate("CourseExplorer")}
+                  onBrowseColleges={() => onNavigate("CollegeDirectory")}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <PlaceholderPage
-              title="About"
-              description="Learn more about CareerPath Finder."
+            <Route path="/courses" element={<CourseExplorer />} />
+            <Route path="/colleges" element={<CollegeDirectory />} />
+            <Route
+              path="/profile"
+              element={
+                <PlaceholderPage
+                  title="Your Profile"
+                  description="View your timeline and saved items. Ask me to build it next!"
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <PlaceholderPage
-              title="Contact"
-              description="Get in touch with us."
+            <Route
+              path="/about"
+              element={
+                <PlaceholderPage
+                  title="About"
+                  description="Learn more about CareerPath Finder."
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/privacy"
-          element={
-            <PlaceholderPage
-              title="Privacy Policy"
-              description="How we handle your data."
+            <Route
+              path="/contact"
+              element={
+                <PlaceholderPage
+                  title="Contact"
+                  description="Get in touch with us."
+                />
+              }
             />
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+            <Route
+              path="/privacy"
+              element={
+                <PlaceholderPage
+                  title="Privacy Policy"
+                  description="How we handle your data."
+                />
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
     );
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="flex min-h-screen flex-col">
