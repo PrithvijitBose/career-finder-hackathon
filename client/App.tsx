@@ -12,6 +12,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import Home from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import { Header, type AppPage } from "@/components/layout/Header";
@@ -21,6 +22,7 @@ import CourseExplorer from "./pages/CourseExplorer";
 import CollegeDirectory from "./pages/CollegeDirectory";
 import { PlaceholderPage } from "./pages/Placeholder";
 import { useEffect, useMemo, useState } from "react";
+import { RecommendationProvider } from "@/context/recommendation";
 
 const queryClient = new QueryClient();
 
