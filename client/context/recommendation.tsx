@@ -11,10 +11,16 @@ const Ctx = createContext<RecContext | undefined>(undefined);
 function getInitial(): Stream | null {
   if (typeof window === "undefined") return null;
   const v = localStorage.getItem("recommendedStream");
-  return v && ["Engineering","Medicine","Arts","Commerce","IT"].includes(v) ? (v as Stream) : null;
+  return v && ["Engineering", "Medicine", "Arts", "Commerce", "IT"].includes(v)
+    ? (v as Stream)
+    : null;
 }
 
-export function RecommendationProvider({ children }: { children: React.ReactNode }) {
+export function RecommendationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [recommended, setRecommended] = useState<Stream | null>(getInitial);
 
   useEffect(() => {
@@ -28,6 +34,9 @@ export function RecommendationProvider({ children }: { children: React.ReactNode
 
 export function useRecommendation() {
   const v = useContext(Ctx);
-  if (!v) throw new Error("useRecommendation must be used within RecommendationProvider");
+  if (!v)
+    throw new Error(
+      "useRecommendation must be used within RecommendationProvider",
+    );
   return v;
 }

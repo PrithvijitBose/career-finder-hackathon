@@ -23,12 +23,22 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
 
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-2">
-            <motion.div className="space-y-6" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="inline-flex items-center gap-2 rounded-full border bg-white/70 px-3 py-1 text-sm text-foreground/70 backdrop-blur">
                 <Sparkles className="h-4 w-4 text-indigo-600" />
                 <span>Find your perfect study path</span>
               </div>
-              <motion.h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}>
+              <motion.h1
+                className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+              >
                 Discover your strengths. Choose the right career path.
               </motion.h1>
               <p className="max-w-xl text-lg text-muted-foreground">
@@ -69,34 +79,58 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
             </motion.div>
 
             <div className="relative">
-              <TiltCard className="group mx-auto aspect-[4/3] w-full max-w-[560px] overflow-hidden rounded-2xl border bg-card text-card-foreground shadow-xl" glare>
+              <TiltCard
+                className="group mx-auto aspect-[4/3] w-full max-w-[560px] overflow-hidden rounded-2xl border bg-card text-card-foreground shadow-xl"
+                glare
+              >
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-indigo-50" />
                 <div className="relative grid h-full grid-cols-2 gap-6 p-6">
-                  <motion.div className="flex flex-col justify-between rounded-xl bg-indigo-600 p-5 text-white shadow-lg" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+                  <motion.div
+                    className="flex flex-col justify-between rounded-xl bg-indigo-600 p-5 text-white shadow-lg"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
+                  >
                     <div className="space-y-1">
                       <p className="text-sm/5 opacity-90">Recommended Stream</p>
                       <p className="text-2xl font-bold">Engineering</p>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm opacity-90">Based on your answers</span>
+                      <span className="text-sm opacity-90">
+                        Based on your answers
+                      </span>
                       <ArrowRight className="h-5 w-5" />
                     </div>
                   </motion.div>
-                  <motion.div className="flex flex-col justify-between rounded-xl border bg-card text-card-foreground p-5" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                  <motion.div
+                    className="flex flex-col justify-between rounded-xl border bg-card text-card-foreground p-5"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25 }}
+                  >
                     <div className="space-y-1">
-                      <p className="text-sm/5 text-muted-foreground">Next Step</p>
+                      <p className="text-sm/5 text-muted-foreground">
+                        Next Step
+                      </p>
                       <p className="text-xl font-semibold">Explore Courses</p>
                     </div>
                     <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
                       <Compass className="h-5 w-5" /> View options
                     </div>
                   </motion.div>
-                  <motion.div className="col-span-2 rounded-xl border bg-card text-card-foreground p-5" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
+                  <motion.div
+                    className="col-span-2 rounded-xl border bg-card text-card-foreground p-5"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35 }}
+                  >
                     <div className="flex items-center gap-3">
                       <GraduationCap className="h-6 w-6 text-indigo-600" />
                       <div>
                         <p className="font-semibold">Top Colleges Near You</p>
-                        <p className="text-sm text-muted-foreground">Find colleges by district and compare details</p>
+                        <p className="text-sm text-muted-foreground">
+                          Find colleges by district and compare details
+                        </p>
                       </div>
                     </div>
                     <div className="mt-3 flex items-center gap-3 text-indigo-700 dark:text-indigo-300">
@@ -143,7 +177,10 @@ function FeatureCard({
   desc: string;
 }) {
   return (
-    <TiltCard className="group rounded-2xl border bg-card text-card-foreground p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg" glare>
+    <TiltCard
+      className="group rounded-2xl border bg-card text-card-foreground p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      glare
+    >
       <div className="inline-flex rounded-lg bg-indigo-50 p-3 text-indigo-700 transition group-hover:bg-indigo-100 dark:bg-indigo-500/15 dark:text-indigo-300">
         {icon}
       </div>

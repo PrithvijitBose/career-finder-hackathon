@@ -170,7 +170,9 @@ export default function AptitudeTest({
                 onClick={() => onSelect(i)}
                 className={
                   "flex items-center justify-between rounded-xl border bg-card px-4 py-3 text-left transition hover:border-indigo-300 hover:bg-indigo-50/30 " +
-                  (selectedIndex === i ? "border-indigo-400 bg-indigo-50/40 dark:bg-white/10" : "")
+                  (selectedIndex === i
+                    ? "border-indigo-400 bg-indigo-50/40 dark:bg-white/10"
+                    : "")
                 }
               >
                 <span className="text-card-foreground">{opt.label}</span>
