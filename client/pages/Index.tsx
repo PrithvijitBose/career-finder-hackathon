@@ -1,11 +1,23 @@
-import { ArrowRight, Building2, Compass, GraduationCap, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  Compass,
+  GraduationCap,
+  Sparkles,
+} from "lucide-react";
 
 export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
   return (
     <div className="bg-gradient-to-b from-background to-secondary/40">
       <section className="relative overflow-hidden">
-        <div aria-hidden className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -right-24 -bottom-24 h-72 w-72 rounded-full bg-indigo-400/10 blur-3xl" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-indigo-500/10 blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -bottom-24 h-72 w-72 rounded-full bg-indigo-400/10 blur-3xl"
+        />
 
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -18,7 +30,8 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
                 Discover your strengths. Choose the right career path.
               </h1>
               <p className="max-w-xl text-lg text-foreground/70">
-                Take our free aptitude quiz to get tailored stream suggestions, explore courses, and discover top colleges across districts.
+                Take our free aptitude quiz to get tailored stream suggestions,
+                explore courses, and discover top colleges across districts.
               </p>
               <div className="flex flex-wrap items-center gap-4">
                 <button
@@ -36,9 +49,18 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
                 </a>
               </div>
               <div className="flex items-center gap-6 text-sm text-foreground/60">
-                <div className="flex items-center gap-2"><div className="h-2 w-2 rounded-full bg-green-500" /> Accurate insights</div>
-                <div className="flex items-center gap-2"><div className="h-2 w-2 rounded-full bg-indigo-500" /> Personalized paths</div>
-                <div className="flex items-center gap-2"><div className="h-2 w-2 rounded-full bg-pink-500" /> Free to try</div>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-green-500" /> Accurate
+                  insights
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-indigo-500" />{" "}
+                  Personalized paths
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-pink-500" /> Free to
+                  try
+                </div>
               </div>
             </div>
 
@@ -52,7 +74,9 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
                       <p className="text-2xl font-bold">Engineering</p>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm opacity-90">Based on your answers</span>
+                      <span className="text-sm opacity-90">
+                        Based on your answers
+                      </span>
                       <ArrowRight className="h-5 w-5" />
                     </div>
                   </div>
@@ -70,7 +94,9 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
                       <GraduationCap className="h-6 w-6 text-indigo-600" />
                       <div>
                         <p className="font-semibold">Top Colleges Near You</p>
-                        <p className="text-sm text-foreground/60">Find colleges by district and compare details</p>
+                        <p className="text-sm text-foreground/60">
+                          Find colleges by district and compare details
+                        </p>
                       </div>
                     </div>
                     <div className="mt-3 flex items-center gap-3 text-indigo-700">
@@ -107,7 +133,15 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
   );
 }
 
-function FeatureCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+function FeatureCard({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
   return (
     <div className="group rounded-2xl border bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg">
       <div className="inline-flex rounded-lg bg-indigo-50 p-3 text-indigo-700 transition group-hover:bg-indigo-100">

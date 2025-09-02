@@ -3,7 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { GraduationCap, Menu, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type AppPage = "Home" | "AptitudeTest" | "CourseExplorer" | "CollegeDirectory" | "UserProfile";
+export type AppPage =
+  | "Home"
+  | "AptitudeTest"
+  | "CourseExplorer"
+  | "CollegeDirectory"
+  | "UserProfile";
 
 const navItems: { label: string; page: AppPage; path: string }[] = [
   { label: "Home", page: "Home", path: "/" },
@@ -12,7 +17,13 @@ const navItems: { label: string; page: AppPage; path: string }[] = [
   { label: "Colleges", page: "CollegeDirectory", path: "/colleges" },
 ];
 
-export function Header({ currentPage, onNavigate }: { currentPage: AppPage; onNavigate: (page: AppPage) => void }) {
+export function Header({
+  currentPage,
+  onNavigate,
+}: {
+  currentPage: AppPage;
+  onNavigate: (page: AppPage) => void;
+}) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
@@ -20,11 +31,17 @@ export function Header({ currentPage, onNavigate }: { currentPage: AppPage; onNa
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:bg-background/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="flex h-16 items-center justify-between">
-          <Link to="/" onClick={() => onNavigate("Home")} className="flex items-center gap-2">
+          <Link
+            to="/"
+            onClick={() => onNavigate("Home")}
+            className="flex items-center gap-2"
+          >
             <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-primary/10 text-primary">
               <GraduationCap className="h-5 w-5" />
             </span>
-            <span className="font-extrabold tracking-tight text-lg sm:text-xl">CareerPath Finder</span>
+            <span className="font-extrabold tracking-tight text-lg sm:text-xl">
+              CareerPath Finder
+            </span>
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">

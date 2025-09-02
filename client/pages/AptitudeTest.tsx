@@ -15,10 +15,19 @@ const QUESTIONS: Question[] = [
     id: 1,
     text: "Which activity do you enjoy the most?",
     options: [
-      { label: "Solving puzzles or building things", weights: { Engineering: 2, IT: 1 } },
-      { label: "Learning about the human body and health", weights: { Medicine: 2 } },
+      {
+        label: "Solving puzzles or building things",
+        weights: { Engineering: 2, IT: 1 },
+      },
+      {
+        label: "Learning about the human body and health",
+        weights: { Medicine: 2 },
+      },
       { label: "Creating art, music, or writing", weights: { Arts: 2 } },
-      { label: "Analyzing markets or managing money", weights: { Commerce: 2 } },
+      {
+        label: "Analyzing markets or managing money",
+        weights: { Commerce: 2 },
+      },
     ],
   },
   {
@@ -36,9 +45,15 @@ const QUESTIONS: Question[] = [
     text: "How do you prefer to solve problems?",
     options: [
       { label: "Designing systems and models", weights: { Engineering: 2 } },
-      { label: "Understanding people and improving wellbeing", weights: { Medicine: 2, Arts: 1 } },
+      {
+        label: "Understanding people and improving wellbeing",
+        weights: { Medicine: 2, Arts: 1 },
+      },
       { label: "Expressing ideas creatively", weights: { Arts: 2 } },
-      { label: "Using data to make decisions", weights: { Commerce: 2, IT: 1 } },
+      {
+        label: "Using data to make decisions",
+        weights: { Commerce: 2, IT: 1 },
+      },
     ],
   },
   {
@@ -73,12 +88,26 @@ const QUESTIONS: Question[] = [
   },
 ];
 
-export default function AptitudeTest({ onExploreCourses, onBrowseColleges }: { onExploreCourses?: () => void; onBrowseColleges?: () => void }) {
+export default function AptitudeTest({
+  onExploreCourses,
+  onBrowseColleges,
+}: {
+  onExploreCourses?: () => void;
+  onBrowseColleges?: () => void;
+}) {
   const [step, setStep] = useState(0); // 0..QUESTIONS.length, where last is results
-  const [scores, setScores] = useState<Record<Stream, number>>({ Engineering: 0, Medicine: 0, Arts: 0, Commerce: 0, IT: 0 });
+  const [scores, setScores] = useState<Record<Stream, number>>({
+    Engineering: 0,
+    Medicine: 0,
+    Arts: 0,
+    Commerce: 0,
+    IT: 0,
+  });
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const percent = Math.round((Math.min(step, QUESTIONS.length) / QUESTIONS.length) * 100);
+  const percent = Math.round(
+    (Math.min(step, QUESTIONS.length) / QUESTIONS.length) * 100,
+  );
 
   useEffect(() => {
     setSelectedIndex(null);
@@ -90,7 +119,8 @@ export default function AptitudeTest({ onExploreCourses, onBrowseColleges }: { o
     const option = QUESTIONS[step].options[optionIndex];
     setScores((prev) => {
       const next = { ...prev };
-      for (const [k, v] of Object.entries(option.weights)) next[k as Stream] = (next[k as Stream] || 0) + (v as number);
+      for (const [k, v] of Object.entries(option.weights))
+        next[k as Stream] = (next[k as Stream] || 0) + (v as number);
       return next;
     });
     setTimeout(() => setStep((s) => s + 1), 450); // auto-next
@@ -114,7 +144,9 @@ export default function AptitudeTest({ onExploreCourses, onBrowseColleges }: { o
           <GraduationCap className="h-4 w-4 text-indigo-600" /> Aptitude Quiz
         </div>
         <div className="flex items-center gap-2 text-sm text-foreground/60">
-          <span>{Math.min(step, QUESTIONS.length)} / {QUESTIONS.length}</span>
+          <span>
+            {Math.min(step, QUESTIONS.length)} / {QUESTIONS.length}
+          </span>
         </div>
       </div>
 
@@ -122,7 +154,9 @@ export default function AptitudeTest({ onExploreCourses, onBrowseColleges }: { o
 
       {step < QUESTIONS.length ? (
         <div className="mt-8">
-          <p className="text-lg font-semibold text-slate-900">{QUESTIONS[step].text}</p>
+          <p className="text-lg font-semibold text-slate-900">
+            {QUESTIONS[step].text}
+          </p>
           <div className="mt-5 grid gap-3">
             {QUESTIONS[step].options.map((opt, i) => (
               <button
@@ -160,9 +194,12 @@ export default function AptitudeTest({ onExploreCourses, onBrowseColleges }: { o
           <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm text-indigo-700">
             Your recommended stream
           </div>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">{result}</h2>
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
+            {result}
+          </h2>
           <p className="mx-auto mt-2 max-w-prose text-foreground/70">
-            Based on your answers, <span className="font-medium">{result}</span> aligns strongly with your interests and strengths.
+            Based on your answers, <span className="font-medium">{result}</span>{" "}
+            aligns strongly with your interests and strengths.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <button
