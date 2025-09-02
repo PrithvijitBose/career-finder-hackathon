@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { GraduationCap, Menu, User } from "lucide-react";
+import { GraduationCap, Menu, User, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/hooks/use-theme";
 
 export type AppPage =
   | "Home"
@@ -16,6 +17,19 @@ const navItems: { label: string; page: AppPage; path: string }[] = [
   { label: "Courses", page: "CourseExplorer", path: "/courses" },
   { label: "Colleges", page: "CollegeDirectory", path: "/colleges" },
 ];
+
+function ThemeToggle() {
+  const { theme, toggle } = useTheme();
+  return (
+    <button
+      onClick={toggle}
+      className="inline-flex h-9 w-9 items-center justify-center rounded-md border bg-white text-foreground/80 transition hover:bg-secondary"
+      aria-label="Toggle theme"
+    >
+      {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+    </button>
+  );
+}
 
 export function Header({
   currentPage,
