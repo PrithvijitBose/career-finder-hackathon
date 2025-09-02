@@ -3,6 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ArrowRight, GraduationCap, RefreshCw } from "lucide-react";
 import type { Stream } from "@/types/streams";
 import { useRecommendation } from "@/context/recommendation";
+import { motion } from "framer-motion";
 
 type Question = {
   id: number;
@@ -202,11 +203,16 @@ export default function AptitudeTest({
           <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm text-indigo-700">
             Your recommended stream
           </div>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
+          <motion.h2
+            className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
             {result}
-          </h2>
+          </motion.h2>
           <p className="mx-auto mt-2 max-w-prose text-muted-foreground">
-            Based on your answers, <span className="font-medium">{result}</span>{" "}
+            Based on your answers, <span className="font-semibold text-slate-900 dark:text-white transition-colors">{result}</span>{" "}
             aligns strongly with your interests and strengths.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
