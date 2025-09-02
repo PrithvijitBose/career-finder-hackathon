@@ -34,11 +34,10 @@ export default function CourseExplorer() {
   const [open, setOpen] = useState(false);
 
   // Apply recommendation as default filter if present
-  if (recommended && stream === "All") {
-    // set synchronously on first render to avoid flicker
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useState(() => setStream(recommended));
-  }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (recommended) setStream(recommended as any);
+  }, [recommended]);
   const [selected, setSelected] = useState<Course | null>(null);
 
   const filtered = useMemo(() => COURSES.filter((c) => (stream === "All" ? true : c.stream === stream)), [stream]);
