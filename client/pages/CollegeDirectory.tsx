@@ -21,15 +21,17 @@ const COLLEGES: College[] = [
 ];
 
 export default function CollegeDirectory() {
+  const { recommended } = useRecommendation();
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<College | null>(null);
 
   const filtered = useMemo(() => {
-    if (!query) return COLLEGES;
+    const base = recommended ? COLLEGES.filter((c) => c.streams.includes(recommended)) : COLLEGES;
+    if (!query) return base;
     const q = query.toLowerCase();
-    return COLLEGES.filter((c) => c.district.toLowerCase().includes(q) || c.name.toLowerCase().includes(q));
-  }, [query]);
+    return base.filter((c) => c.district.toLowerCase().includes(q) || c.name.toLowerCase().includes(q));
+  }, [query, recommended]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -40,6 +42,13 @@ export default function CollegeDirectory() {
           <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search by district or name" className="w-72 rounded-md border bg-card pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-400"/>
         </div>
       </div>
+
+      {recommended && (
+        <div className="mb-4 rounded-lg border bg-secondary/60 px-3 py-2 text-sm">
+          Personalized: showing <span className="font-medium">{recommended}</span> colleges from your quiz.
+          <button className="ml-2 rounded border px-2 py-0.5 text-xs" onClick={() => (window.location.href = "/colleges")}>Clear</button>
+        </div>
+      )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((col)=> (
