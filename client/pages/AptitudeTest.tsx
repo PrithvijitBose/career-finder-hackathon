@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ArrowRight, GraduationCap, RefreshCw } from "lucide-react";
-
-type Stream = "Engineering" | "Medicine" | "Arts" | "Commerce" | "IT";
+import type { Stream } from "@/types/streams";
+import { useRecommendation } from "@/context/recommendation";
 
 type Question = {
   id: number;
