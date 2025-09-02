@@ -212,7 +212,10 @@ export default function AptitudeTest({
             {result}
           </motion.h2>
           <p className="mx-auto mt-2 max-w-prose text-muted-foreground">
-            Based on your answers, <span className="font-semibold text-slate-900 dark:text-white transition-colors">{result}</span>{" "}
+            Based on your answers,{" "}
+            <span className="font-semibold text-slate-900 dark:text-white transition-colors">
+              {result}
+            </span>{" "}
             aligns strongly with your interests and strengths.
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
