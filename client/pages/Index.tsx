@@ -31,7 +31,7 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
               <motion.h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}>
                 Discover your strengths. Choose the right career path.
               </motion.h1>
-              <p className="max-w-xl text-lg text-foreground/70">
+              <p className="max-w-xl text-lg text-muted-foreground">
                 Take our free aptitude quiz to get tailored stream suggestions,
                 explore courses, and discover top colleges across districts.
               </p>
@@ -69,7 +69,7 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
             </motion.div>
 
             <div className="relative">
-              <TiltCard className="group mx-auto aspect-[4/3] w-full max-w-[560px] overflow-hidden rounded-2xl border bg-white shadow-xl" glare>
+              <TiltCard className="group mx-auto aspect-[4/3] w-full max-w-[560px] overflow-hidden rounded-2xl border bg-card text-card-foreground shadow-xl" glare>
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-indigo-50" />
                 <div className="relative grid h-full grid-cols-2 gap-6 p-6">
                   <motion.div className="flex flex-col justify-between rounded-xl bg-indigo-600 p-5 text-white shadow-lg" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
@@ -82,24 +82,24 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
                       <ArrowRight className="h-5 w-5" />
                     </div>
                   </motion.div>
-                  <motion.div className="flex flex-col justify-between rounded-xl border bg-white p-5" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                  <motion.div className="flex flex-col justify-between rounded-xl border bg-card text-card-foreground p-5" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
                     <div className="space-y-1">
-                      <p className="text-sm/5 text-foreground/70">Next Step</p>
+                      <p className="text-sm/5 text-muted-foreground">Next Step</p>
                       <p className="text-xl font-semibold">Explore Courses</p>
                     </div>
-                    <div className="flex items-center gap-2 text-indigo-700">
+                    <div className="flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
                       <Compass className="h-5 w-5" /> View options
                     </div>
                   </motion.div>
-                  <motion.div className="col-span-2 rounded-xl border bg-white p-5" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
+                  <motion.div className="col-span-2 rounded-xl border bg-card text-card-foreground p-5" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
                     <div className="flex items-center gap-3">
                       <GraduationCap className="h-6 w-6 text-indigo-600" />
                       <div>
                         <p className="font-semibold">Top Colleges Near You</p>
-                        <p className="text-sm text-foreground/60">Find colleges by district and compare details</p>
+                        <p className="text-sm text-muted-foreground">Find colleges by district and compare details</p>
                       </div>
                     </div>
-                    <div className="mt-3 flex items-center gap-3 text-indigo-700">
+                    <div className="mt-3 flex items-center gap-3 text-indigo-700 dark:text-indigo-300">
                       <Building2 className="h-5 w-5" /> Browse Directory
                     </div>
                   </motion.div>
@@ -143,12 +143,12 @@ function FeatureCard({
   desc: string;
 }) {
   return (
-    <TiltCard className="group rounded-2xl border bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg" glare>
-      <div className="inline-flex rounded-lg bg-indigo-50 p-3 text-indigo-700 transition group-hover:bg-indigo-100">
+    <TiltCard className="group rounded-2xl border bg-card text-card-foreground p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg" glare>
+      <div className="inline-flex rounded-lg bg-indigo-50 p-3 text-indigo-700 transition group-hover:bg-indigo-100 dark:bg-indigo-500/15 dark:text-indigo-300">
         {icon}
       </div>
       <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-      <p className="mt-2 text-foreground/70">{desc}</p>
+      <p className="mt-2 text-muted-foreground">{desc}</p>
     </TiltCard>
   );
 }
