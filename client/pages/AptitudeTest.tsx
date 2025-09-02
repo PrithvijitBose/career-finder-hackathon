@@ -95,6 +95,7 @@ export default function AptitudeTest({
   onExploreCourses?: () => void;
   onBrowseColleges?: () => void;
 }) {
+  const { setRecommended } = useRecommendation();
   const [step, setStep] = useState(0); // 0..QUESTIONS.length, where last is results
   const [scores, setScores] = useState<Record<Stream, number>>({
     Engineering: 0,
@@ -130,12 +131,17 @@ export default function AptitudeTest({
     setStep(0);
     setScores({ Engineering: 0, Medicine: 0, Arts: 0, Commerce: 0, IT: 0 });
     setSelectedIndex(null);
+    setRecommended(null);
   };
 
   const result = useMemo(() => {
     const entries = Object.entries(scores) as [Stream, number][];
     return entries.sort((a, b) => b[1] - a[1])[0][0];
   }, [scores]);
+
+  useEffect(() => {
+    if (step >= QUESTIONS.length) setRecommended(result);
+  }, [step, result, setRecommended]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
@@ -163,12 +169,12 @@ export default function AptitudeTest({
                 key={i}
                 onClick={() => onSelect(i)}
                 className={
-                  "flex items-center justify-between rounded-xl border bg-white px-4 py-3 text-left transition hover:border-indigo-300 hover:bg-indigo-50/50 " +
-                  (selectedIndex === i ? "border-indigo-400 bg-indigo-50" : "")
+                  "flex items-center justify-between rounded-xl border bg-card px-4 py-3 text-left transition hover:border-indigo-300 hover:bg-indigo-50/30 " +
+                  (selectedIndex === i ? "border-indigo-400 bg-indigo-50/40 dark:bg-white/10" : "")
                 }
               >
-                <span className="text-foreground/90">{opt.label}</span>
-                <ArrowRight className="h-4 w-4 text-foreground/50" />
+                <span className="text-card-foreground">{opt.label}</span>
+                <ArrowRight className="h-4 w-4 text-muted-foreground" />
               </button>
             ))}
           </div>
@@ -190,14 +196,14 @@ export default function AptitudeTest({
           </div>
         </div>
       ) : (
-        <div className="mt-10 rounded-2xl border bg-white p-6 text-center shadow-sm">
+        <div className="mt-10 rounded-2xl border bg-card text-card-foreground p-6 text-center shadow-sm">
           <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-sm text-indigo-700">
             Your recommended stream
           </div>
           <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
             {result}
           </h2>
-          <p className="mx-auto mt-2 max-w-prose text-foreground/70">
+          <p className="mx-auto mt-2 max-w-prose text-muted-foreground">
             Based on your answers, <span className="font-medium">{result}</span>{" "}
             aligns strongly with your interests and strengths.
           </p>
