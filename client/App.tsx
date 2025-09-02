@@ -72,24 +72,8 @@ function AppShell() {
             />
           }
         />
-        <Route
-          path="/courses"
-          element={
-            <PlaceholderPage
-              title="Course Explorer"
-              description="Filter by stream and explore curated course paths. Ask me to build this page next!"
-            />
-          }
-        />
-        <Route
-          path="/colleges"
-          element={
-            <PlaceholderPage
-              title="College Directory"
-              description="Search by district and view college details. Ask me to implement it next!"
-            />
-          }
-        />
+        <Route path="/courses" element={<CourseExplorer />} />
+        <Route path="/colleges" element={<CollegeDirectory />} />
         <Route
           path="/profile"
           element={
