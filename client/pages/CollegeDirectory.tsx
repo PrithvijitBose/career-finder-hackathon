@@ -1,6 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Building2, MapPin, Search } from "lucide-react";
+import { useRecommendation } from "@/context/recommendation";
+import type { Stream } from "@/types/streams";
 
 export type College = {
   id: number;
