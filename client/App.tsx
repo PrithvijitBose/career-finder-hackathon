@@ -150,7 +150,9 @@ const App = () => (
   </QueryClientProvider>
 );
 
-const container = document.getElementById("root")! as HTMLElement & { _reactRoot?: ReturnType<typeof createRoot> };
+const container = document.getElementById("root")! as HTMLElement & {
+  _reactRoot?: ReturnType<typeof createRoot>;
+};
 const root = container._reactRoot ?? createRoot(container);
 container._reactRoot = root;
 root.render(<App />);
