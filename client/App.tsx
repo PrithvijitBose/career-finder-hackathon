@@ -128,11 +128,13 @@ function AppShell() {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header currentPage={currentPage} onNavigate={onNavigate} />
-      <main className="flex-1">{content}</main>
-      <Footer />
-    </div>
+    <RecommendationProvider>
+      <div className="flex min-h-screen flex-col">
+        <Header currentPage={currentPage} onNavigate={onNavigate} />
+        <main className="flex-1">{content}</main>
+        <Footer />
+      </div>
+    </RecommendationProvider>
   );
 }
 
