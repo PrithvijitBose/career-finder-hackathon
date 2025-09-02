@@ -29,8 +29,16 @@ const COURSES: Course[] = [
 const STREAMS: ("All" | Stream)[] = ["All", "Engineering", "Medicine", "Arts", "Commerce", "IT"];
 
 export default function CourseExplorer() {
+  const { recommended } = useRecommendation();
   const [stream, setStream] = useState<(typeof STREAMS)[number]>("All");
   const [open, setOpen] = useState(false);
+
+  // Apply recommendation as default filter if present
+  if (recommended && stream === "All") {
+    // set synchronously on first render to avoid flicker
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useState(() => setStream(recommended));
+  }
   const [selected, setSelected] = useState<Course | null>(null);
 
   const filtered = useMemo(() => COURSES.filter((c) => (stream === "All" ? true : c.stream === stream)), [stream]);
@@ -49,6 +57,13 @@ export default function CourseExplorer() {
           </div>
         </div>
       </div>
+
+      {recommended && (
+        <div className="mb-4 rounded-lg border bg-secondary/60 px-3 py-2 text-sm">
+          Personalized: showing <span className="font-medium">{recommended}</span> courses from your quiz.
+          <button className="ml-2 rounded border px-2 py-0.5 text-xs" onClick={() => setStream("All")}>Clear</button>
+        </div>
+      )}
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((course)=> (
