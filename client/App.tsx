@@ -20,6 +20,7 @@ import { Footer } from "@/components/layout/Footer";
 import AptitudeTest from "./pages/AptitudeTest";
 import CourseExplorer from "./pages/CourseExplorer";
 import CollegeDirectory from "./pages/CollegeDirectory";
+import Login from "./pages/Login";
 import { PlaceholderPage } from "./pages/Placeholder";
 import { useEffect, useMemo, useState } from "react";
 import { RecommendationProvider } from "@/context/recommendation";
