@@ -82,6 +82,7 @@ function AppShell() {
                 <AptitudeTest
                   onExploreCourses={() => onNavigate("CourseExplorer")}
                   onBrowseColleges={() => onNavigate("CollegeDirectory")}
+                  onGoProfile={() => onNavigate("UserProfile")}
                 />
               }
             />
