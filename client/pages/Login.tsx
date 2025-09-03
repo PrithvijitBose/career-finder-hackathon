@@ -17,6 +17,7 @@ const interests = [
 export default function Login() {
   const nav = useNavigate();
   const { theme, toggle } = useTheme();
+  const { setUser } = useUser();
   const [form, setForm] = useState({
     name: "",
     age: "",
