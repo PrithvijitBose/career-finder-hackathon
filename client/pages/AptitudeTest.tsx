@@ -92,9 +92,11 @@ const QUESTIONS: Question[] = [
 export default function AptitudeTest({
   onExploreCourses,
   onBrowseColleges,
+  onGoProfile,
 }: {
   onExploreCourses?: () => void;
   onBrowseColleges?: () => void;
+  onGoProfile?: () => void;
 }) {
   const { setRecommended } = useRecommendation();
   const [step, setStep] = useState(0); // 0..QUESTIONS.length, where last is results
