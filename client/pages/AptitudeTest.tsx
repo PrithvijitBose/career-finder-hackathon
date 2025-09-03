@@ -208,8 +208,8 @@ export default function AptitudeTest({
           <motion.h2
             className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white"
             initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
+            animate={{ opacity: 1, y: 0, textShadow: ["0 0 0px rgba(99,102,241,0.0)", "0 0 18px rgba(99,102,241,0.55)", "0 0 10px rgba(99,102,241,0.25)"] }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             {result}
           </motion.h2>
@@ -233,6 +233,12 @@ export default function AptitudeTest({
               className="inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 transition hover:bg-secondary"
             >
               Browse Colleges
+            </button>
+            <button
+              onClick={onGoProfile}
+              className="inline-flex items-center gap-2 rounded-lg border px-5 py-2.5 transition hover:bg-secondary"
+            >
+              Go to Profile
             </button>
             <button
               onClick={reset}
