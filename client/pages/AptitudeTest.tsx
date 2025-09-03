@@ -143,8 +143,14 @@ export default function AptitudeTest({
   }, [scores]);
 
   useEffect(() => {
-    if (step >= QUESTIONS.length) setRecommended(result);
-  }, [step, result, setRecommended]);
+    if (step >= QUESTIONS.length) {
+      setRecommended(result);
+      const t = setTimeout(() => {
+        onGoProfile?.();
+      }, 300);
+      return () => clearTimeout(t);
+    }
+  }, [step, result, setRecommended, onGoProfile]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
