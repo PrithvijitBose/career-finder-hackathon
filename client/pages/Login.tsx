@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
+import { useUser } from "@/context/user";
 
 const interests = [
   "Engineering",
