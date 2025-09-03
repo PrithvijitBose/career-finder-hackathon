@@ -87,15 +87,7 @@ function AppShell() {
             <Route path="/courses" element={<CourseExplorer />} />
             <Route path="/colleges" element={<CollegeDirectory />} />
             <Route path="/login" element={<Login />} />
-            <Route
-              path="/profile"
-              element={
-                <PlaceholderPage
-                  title="Your Profile"
-                  description="View your timeline and saved items. Ask me to build it next!"
-                />
-              }
-            />
+            <Route path="/profile" element={<Profile />} />
             <Route
               path="/about"
               element={
