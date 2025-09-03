@@ -85,6 +85,7 @@ function AppShell() {
             />
             <Route path="/courses" element={<CourseExplorer />} />
             <Route path="/colleges" element={<CollegeDirectory />} />
+            <Route path="/login" element={<Login />} />
             <Route
               path="/profile"
               element={
