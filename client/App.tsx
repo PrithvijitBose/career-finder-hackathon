@@ -24,6 +24,7 @@ import Login from "./pages/Login";
 import { PlaceholderPage } from "./pages/Placeholder";
 import { useEffect, useMemo, useState } from "react";
 import { RecommendationProvider } from "@/context/recommendation";
+import { UserProvider } from "@/context/user";
 
 const queryClient = new QueryClient();
 
