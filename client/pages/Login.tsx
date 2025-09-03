@@ -44,6 +44,7 @@ export default function Login() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    setUser(form as any);
     nav("/aptitude");
   };
 
