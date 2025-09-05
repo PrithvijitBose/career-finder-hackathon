@@ -1,13 +1,18 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export function MouseGradient({
-  size = 360,
-  color = "radial-gradient(600px circle at var(--x) var(--y), rgba(99,102,241,0.25), transparent 60%)",
+  children,
+  size = 420,
+  color = "radial-gradient(700px circle at var(--x) var(--y), rgba(99,102,241,0.20), transparent 60%)",
   blur = "blur-3xl",
+  className,
 }: {
+  children: React.ReactNode;
   size?: number;
   color?: string;
   blur?: string;
+  className?: string;
 }) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -21,7 +26,8 @@ export function MouseGradient({
   }
 
   return (
-    <div onMouseMove={onMove} className="relative">
+    <div onMouseMove={onMove} className={cn("relative", className)}>
+      {children}
       <motion.div
         style={{ left: sx, top: sy, width: size, height: size }}
         className={`pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 ${blur}`}
