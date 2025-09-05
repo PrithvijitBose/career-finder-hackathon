@@ -42,11 +42,13 @@ export default function Login() {
     }));
   };
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setUser(form as any);
-    nav("/aptitude");
-  };
+ const submit = (e: React.FormEvent) => {
+  e.preventDefault();
+  setUser(form as any);
+  localStorage.setItem("user", JSON.stringify(form)); // ✅ persist
+  nav("/aptitude"); // take to aptitude after first login
+};
+
 
   return (
     <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden bg-gradient-to-br from-indigo-200 via-fuchsia-200 to-pink-200 dark:from-[#0b1220] dark:via-[#0d0f1a] dark:to-[#151a2b]">
