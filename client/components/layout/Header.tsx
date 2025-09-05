@@ -69,13 +69,14 @@ export function Header({
                 to={item.path}
                 onClick={() => onNavigate(item.page)}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "group relative overflow-hidden rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   location.pathname === item.path || currentPage === item.page
                     ? "text-primary bg-primary/10"
                     : "text-foreground/70 hover:text-foreground hover:bg-secondary",
                 )}
               >
-                {item.label}
+                <span className="relative z-10">{item.label}</span>
+                <span aria-hidden className="absolute left-3 right-3 bottom-1 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ))}
           </nav>
