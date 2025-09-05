@@ -28,6 +28,8 @@ import { useEffect, useMemo, useState } from "react";
 import { RecommendationProvider } from "@/context/recommendation";
 import { UserProvider } from "@/context/user";
 import { useUser } from "@/context/user";
+import AI from "./pages/AI";
+
 
 
 const queryClient = new QueryClient();
@@ -144,6 +146,7 @@ function AppShell() {
                 />
               }
             />
+             <Route path="/ai" element={<AI />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </motion.div>
