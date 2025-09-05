@@ -1,4 +1,5 @@
 import "./global.css";
+import {Navigate} from "react-router-dom";
 
 import { Toaster } from "@/components/ui/toaster";
 import { createRoot } from "react-dom/client";
@@ -26,6 +27,8 @@ import { PlaceholderPage } from "./pages/Placeholder";
 import { useEffect, useMemo, useState } from "react";
 import { RecommendationProvider } from "@/context/recommendation";
 import { UserProvider } from "@/context/user";
+import { useUser } from "@/context/user";
+
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,8 @@ function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState<AppPage>("Home");
+
+  const { user } = useUser(); // ✅ works now because provider is above
 
   // Sync currentPage with URL on load/change
   useEffect(() => {
@@ -71,11 +76,33 @@ function AppShell() {
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
         >
-          <Routes>
-            <Route
+          <Routes><Route
+  path="/"
+  element={
+    user ? (
+      <Home onStartQuiz={() => onNavigate("AptitudeTest")} />
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+/>
+<Route
+  path="/login"
+  element={
+    user ? (
+      <Navigate to="/" replace /> // already logged in → go home
+    ) : (
+      <Login />
+    )
+  }
+/>
+
+            
+ 
+            {/* <Route
               path="/"
               element={<Home onStartQuiz={() => onNavigate("AptitudeTest")} />}
-            />
+            /> */}
             <Route
               path="/aptitude"
               element={
@@ -88,7 +115,7 @@ function AppShell() {
             />
             <Route path="/courses" element={<CourseExplorer />} />
             <Route path="/colleges" element={<CollegeDirectory />} />
-            <Route path="/login" element={<Login />} />
+     
             <Route path="/profile" element={<Profile />} />
             <Route
               path="/about"
@@ -125,15 +152,13 @@ function AppShell() {
   }, [location.pathname]);
 
   return (
-    <UserProvider>
-      <RecommendationProvider>
+
         <div className="flex min-h-screen flex-col">
           <Header currentPage={currentPage} onNavigate={onNavigate} />
           <main className="flex-1">{content}</main>
           <Footer />
         </div>
-      </RecommendationProvider>
-    </UserProvider>
+  
   );
 }
 
@@ -143,12 +168,15 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AppShell />
+        <UserProvider>   {/* 👈 move provider here */}
+          <RecommendationProvider>
+            <AppShell />
+          </RecommendationProvider>
+        </UserProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
-
 const container = document.getElementById("root")! as HTMLElement & {
   _reactRoot?: ReturnType<typeof createRoot>;
 };
