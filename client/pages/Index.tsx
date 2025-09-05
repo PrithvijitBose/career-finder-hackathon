@@ -41,7 +41,8 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
           />
         </ParallaxY>
 
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
+        <MouseGradient>
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <motion.div
               className="space-y-6"
@@ -181,6 +182,7 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
             </ParallaxY>
           </div>
         </div>
+        </MouseGradient>
       </section>
 
       <section id="features" className="mx-auto max-w-7xl px-4 pb-16 sm:px-6">
