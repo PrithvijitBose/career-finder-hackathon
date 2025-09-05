@@ -173,7 +173,7 @@ export default function Login() {
                     <option>Undergraduate</option>
                   </select>
                 </Field>
-                <Field label="Academic Interests">
+                {/* <Field label="Academic Interests">
                   <div className="flex flex-wrap gap-2">
                     {interests.map((v) => (
                       <button
@@ -186,7 +186,7 @@ export default function Login() {
                       </button>
                     ))}
                   </div>
-                </Field>
+                </Field> */}
               </div>
 
               <motion.button
