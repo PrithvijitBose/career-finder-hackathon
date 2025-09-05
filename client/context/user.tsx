@@ -1,46 +1,50 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type User = {
-  name: string;
-  age: string;
-  gender: string;
-  class: string;
+name: string;
+  age: string;    //  add this
+  gender: string; //  add this
+  class: string;  //  add this
   interests: string[];
 };
 
-type UserCtx = {
+type UserContextType = {
   user: User | null;
   setUser: (u: User | null) => void;
 };
 
-const Ctx = createContext<UserCtx | undefined>(undefined);
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-const KEY = "career_user";
+export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUserState] = useState<User | null>(null);
 
-function getInitial(): User | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? (JSON.parse(raw) as User) : null;
-  } catch {
-    return null;
-  }
-}
-
-export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(getInitial);
-
+  // Load user from localStorage on first mount
   useEffect(() => {
-    if (user) localStorage.setItem(KEY, JSON.stringify(user));
-    else localStorage.removeItem(KEY);
-  }, [user]);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUserState(JSON.parse(storedUser));
+    }
+  }, []);
 
-  const value = useMemo(() => ({ user, setUser }), [user]);
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
-}
+  //  Wrap setUser to also persist to localStorage
+  const setUser = (u: User | null) => {
+    setUserState(u);
+    if (u) {
+      localStorage.setItem("user", JSON.stringify(u));
+    } else {
+      localStorage.removeItem("user");
+    }
+  };
 
-export function useUser() {
-  const v = useContext(Ctx);
-  if (!v) throw new Error("useUser must be used within UserProvider");
-  return v;
-}
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export const useUser = () => {
+  const ctx = useContext(UserContext);
+  if (!ctx) throw new Error("useUser must be inside UserProvider");
+  return ctx;
+};

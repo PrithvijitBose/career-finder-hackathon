@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useUser } from "@/context/user";
 import { useRecommendation } from "@/context/recommendation";
-import { Progress } from "@/components/ui/progress";
+import LogoutButton from "./Logout";
 
 function initials(name?: string) {
   if (!name) return "U";
@@ -13,16 +13,6 @@ export default function Profile() {
   const { user } = useUser();
   const { recommended } = useRecommendation();
 
-  const skills = [
-    {
-      label: "Analytical",
-      value: recommended === "Engineering" || recommended === "IT" ? 86 : 64,
-    },
-    { label: "Creativity", value: recommended === "Arts" ? 88 : 60 },
-    { label: "Empathy", value: recommended === "Medicine" ? 82 : 58 },
-    { label: "Business", value: recommended === "Commerce" ? 84 : 62 },
-  ];
-
   return (
     <div className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
       {/* animated gradient backdrop */}
@@ -32,19 +22,10 @@ export default function Profile() {
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         style={{ backgroundSize: "200% 200%" }}
       />
-      <motion.div
-        className="absolute -left-20 -top-28 h-72 w-72 rounded-full bg-indigo-400/30 blur-3xl"
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 12, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute -right-24 -bottom-28 h-80 w-80 rounded-full bg-fuchsia-400/30 blur-3xl"
-        animate={{ y: [0, 20, 0] }}
-        transition={{ duration: 14, repeat: Infinity }}
-      />
 
+      {/* Profile content */}
       <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        {/* hero */}
+        {/* avatar + name */}
         <div className="flex flex-col items-center gap-6 text-center">
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -73,28 +54,17 @@ export default function Profile() {
           <InfoCard title="Recommended" value={recommended || "-"} glow />
         </div>
 
-        {/* skills */}
-        <div className="mt-10 rounded-3xl border bg-card/70 p-6 shadow-xl backdrop-blur">
-          <h2 className="text-lg font-semibold">Aptitude strengths</h2>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            {skills.map((s) => (
-              <div key={s.label} className="rounded-2xl border bg-card p-4">
-                <div className="mb-2 flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">{s.label}</span>
-                  <span className="font-medium">{s.value}%</span>
-                </div>
-                <Progress value={s.value} className="h-2" />
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* actions */}
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Action href="/login" label="Edit Profile" />
           <Action href="/aptitude" label="Retake Quiz" variant="outline" />
           <Action href="/courses" label="Explore Courses" />
           <Action href="/colleges" label="Explore Colleges" variant="outline" />
+        </div>
+
+        {/* ✅ Logout button */}
+        <div className="mt-10 flex justify-center">
+          <LogoutButton />
         </div>
       </div>
     </div>
@@ -115,11 +85,15 @@ function InfoCard({
       initial={{ y: 10, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
-      className={`rounded-3xl border bg-card p-6 shadow-xl ${glow ? "ring-1 ring-indigo-400/40" : ""}`}
+      className={`rounded-3xl border bg-card p-6 shadow-xl ${
+        glow ? "ring-1 ring-indigo-400/40" : ""
+      }`}
     >
       <p className="text-sm text-muted-foreground">{title}</p>
       <motion.p
-        className={`mt-2 text-xl font-semibold ${glow ? "text-slate-900 dark:text-white" : ""}`}
+        className={`mt-2 text-xl font-semibold ${
+          glow ? "text-slate-900 dark:text-white" : ""
+        }`}
         animate={
           glow
             ? {
@@ -149,11 +123,21 @@ function Action({
   variant?: "solid" | "outline";
 }) {
   return (
-    <a
+    <motion.a
       href={href}
-      className={`inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium shadow-lg transition ${variant === "solid" ? "bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white hover:from-indigo-500 hover:to-fuchsia-500" : "border bg-card text-card-foreground hover:bg-secondary"}`}
+      whileHover={{
+        scale: 1.05,
+        textShadow: "0px 0px 8px rgba(99,102,241,0.8)",
+        boxShadow: "0px 0px 16px rgba(236,72,153,0.6)",
+      }}
+      whileTap={{ scale: 0.95 }}
+      className={`inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium transition ${
+        variant === "solid"
+          ? "bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white"
+          : "border bg-card text-card-foreground"
+      }`}
     >
       {label}
-    </a>
+    </motion.a>
   );
 }
