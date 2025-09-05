@@ -38,7 +38,8 @@ export function MouseGradient({
             width: "100%",
             height: "100%",
             background: color,
-            WebkitMaskImage: "radial-gradient(circle, black 60%, transparent 70%)",
+            WebkitMaskImage:
+              "radial-gradient(circle, black 60%, transparent 70%)",
             maskImage: "radial-gradient(circle, black 60%, transparent 70%)",
           }}
         />

@@ -39,7 +39,12 @@ export function Magnetic({
   }
 
   return (
-    <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave} className={cn("relative inline-block", className)}>
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={cn("relative inline-block", className)}
+    >
       <motion.div style={{ x, y }}>{children}</motion.div>
     </div>
   );

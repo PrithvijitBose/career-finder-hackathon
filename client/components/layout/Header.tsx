@@ -76,7 +76,10 @@ export function Header({
                 )}
               >
                 <span className="relative z-10">{item.label}</span>
-                <span aria-hidden className="absolute left-3 right-3 bottom-1 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 transition-transform duration-300 group-hover:scale-x-100" />
+                <span
+                  aria-hidden
+                  className="absolute left-3 right-3 bottom-1 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 transition-transform duration-300 group-hover:scale-x-100"
+                />
               </Link>
             ))}
           </nav>
