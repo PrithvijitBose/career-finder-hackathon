@@ -2,9 +2,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type User = {
 name: string;
-  age: string;    // ✅ add this
-  gender: string; // ✅ add this
-  class: string;  // ✅ add this
+  age: string;    //  add this
+  gender: string; //  add this
+  class: string;  //  add this
   interests: string[];
 };
 
@@ -18,7 +18,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUserState] = useState<User | null>(null);
 
-  // ✅ Load user from localStorage on first mount
+  // Load user from localStorage on first mount
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -26,7 +26,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  // ✅ Wrap setUser to also persist to localStorage
+  //  Wrap setUser to also persist to localStorage
   const setUser = (u: User | null) => {
     setUserState(u);
     if (u) {
