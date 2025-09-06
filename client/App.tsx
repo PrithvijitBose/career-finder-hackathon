@@ -1,10 +1,10 @@
 import "./global.css";
 import {Navigate} from "react-router-dom";
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "./components/ui/toaster";
 import { createRoot } from "react-dom/client";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster as Sonner } from "./components/ui/sonner";
+import { TooltipProvider } from "./components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   BrowserRouter,
@@ -16,8 +16,8 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Home from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { Header, type AppPage } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { Header, type AppPage } from "./components/layout/Header";
+import { Footer } from "./components/layout/Footer";
 import AptitudeTest from "./pages/AptitudeTest";
 import CourseExplorer from "./pages/CourseExplorer";
 import CollegeDirectory from "./pages/CollegeDirectory";
@@ -25,14 +25,62 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import { PlaceholderPage } from "./pages/Placeholder";
 import { useEffect, useMemo, useState } from "react";
-import { RecommendationProvider } from "@/context/recommendation";
-import { UserProvider } from "@/context/user";
-import { useUser } from "@/context/user";
+import { RecommendationProvider } from "./context/recommendation";
+import { UserProvider } from "./context/user";
+import { useUser } from "./context/user";
 import AI from "./pages/AI";
-
-
+// Import your existing Computer Science component
+import CSECareerMapping from "./Courses/ComputerScience";
+import MechanicalEngineerMapping from "./Courses/MechanicalEngineer";
 
 const queryClient = new QueryClient();
+
+// Career Mapping Router Component (inline since it's simple)
+function CareerMappingRouter() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Extract course ID from the URL path
+  const courseId = location.pathname.split('/').pop();
+  
+  const handleBackToCourses = () => {
+    navigate('/courses');
+  };
+
+  const renderCareerMapping = () => {
+    switch (courseId) {
+      case 'computer-science':
+        return <CSECareerMapping />;
+      
+      case 'mechanical-engineering':
+        return <MechanicalEngineerMapping/>
+      
+      default:
+        return (
+          <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="max-w-md mx-auto text-center p-6">
+              <div className="bg-white rounded-lg shadow-md p-8">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                  Career Mapping Not Available
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Career mapping for "{courseId}" is coming soon!
+                </p>
+                <button
+                  onClick={handleBackToCourses}
+                  className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                  ← Back to Course Explorer
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+    }
+  };
+
+  return renderCareerMapping();
+}
 
 function AppShell() {
   const navigate = useNavigate();
@@ -53,7 +101,13 @@ function AppShell() {
       "/contact": "Home",
       "/privacy": "Home",
     };
-    setCurrentPage(mapping[location.pathname] ?? "Home");
+    
+    // Handle career mapping routes - set to CourseExplorer context
+    if (location.pathname.startsWith('/career-mapping/')) {
+      setCurrentPage("CourseExplorer");
+    } else {
+      setCurrentPage(mapping[location.pathname] ?? "Home");
+    }
   }, [location.pathname]);
 
   const onNavigate = (page: AppPage) => {
@@ -78,33 +132,28 @@ function AppShell() {
           exit={{ opacity: 0, y: -6 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
         >
-          <Routes><Route
-  path="/"
-  element={
-    user ? (
-      <Home onStartQuiz={() => onNavigate("AptitudeTest")} />
-    ) : (
-      <Navigate to="/login" replace />
-    )
-  }
-/>
-<Route
-  path="/login"
-  element={
-    user ? (
-      <Navigate to="/" replace /> // already logged in → go home
-    ) : (
-      <Login />
-    )
-  }
-/>
-
-            
- 
-            {/* <Route
+          <Routes>
+            <Route
               path="/"
-              element={<Home onStartQuiz={() => onNavigate("AptitudeTest")} />}
-            /> */}
+              element={
+                user ? (
+                  <Home onStartQuiz={() => onNavigate("AptitudeTest")} />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                user ? (
+                  <Navigate to="/" replace /> // already logged in → go home
+                ) : (
+                  <Login />
+                )
+              }
+            />
+
             <Route
               path="/aptitude"
               element={
@@ -116,8 +165,11 @@ function AppShell() {
               }
             />
             <Route path="/courses" element={<CourseExplorer />} />
+            
+            {/* NEW: Career Mapping Routes */}
+            <Route path="/career-mapping/:courseId" element={<CareerMappingRouter />} />
+            
             <Route path="/colleges" element={<CollegeDirectory />} />
-     
             <Route path="/profile" element={<Profile />} />
             <Route
               path="/about"
@@ -146,7 +198,7 @@ function AppShell() {
                 />
               }
             />
-             <Route path="/ai" element={<AI />} />
+            <Route path="/ai" element={<AI />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </motion.div>
@@ -155,13 +207,11 @@ function AppShell() {
   }, [location.pathname]);
 
   return (
-
-        <div className="flex min-h-screen flex-col">
-          <Header currentPage={currentPage} onNavigate={onNavigate} />
-          <main className="flex-1">{content}</main>
-          <Footer />
-        </div>
-  
+    <div className="flex min-h-screen flex-col">
+      <Header currentPage={currentPage} onNavigate={onNavigate} />
+      <main className="flex-1">{content}</main>
+      <Footer />
+    </div>
   );
 }
 
@@ -180,6 +230,7 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 );
+
 const container = document.getElementById("root")! as HTMLElement & {
   _reactRoot?: ReturnType<typeof createRoot>;
 };
