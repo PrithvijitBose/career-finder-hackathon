@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { GraduationCap, Filter, Briefcase } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { GraduationCap, Filter, Briefcase, ArrowRight } from "lucide-react";
 import type { Stream } from "@/types/streams";
 import { useRecommendation } from "@/context/recommendation";
 
@@ -18,27 +20,30 @@ type Course = {
   level: "Undergraduate" | "Diploma" | "Certification";
   duration: string;
   description: string;
-  careers: string[];
+  routeId?: string; // Add route identifier for navigation
+  hasCareerMapping?: boolean; // Flag to show if career mapping is available
 };
 
 const COURSES: Course[] = [
   {
     id: 1,
-    title: "B.Tech Computer Science",
+    title: "Computer Science",
     stream: "Engineering",
     level: "Undergraduate",
-    duration: "4 years",
+    duration: "3years/4 years", 
     description: "Core CS fundamentals with modern software engineering.",
-    careers: ["Software Engineer", "Data Engineer", "SRE"],
+    routeId: "computer-science", // Route identifier
+    hasCareerMapping: true, // This course has detailed career mapping
   },
   {
     id: 2,
-    title: "B.Tech Mechanical Engineering",
+    title: "Mechanical Engineering",
     stream: "Engineering",
     level: "Undergraduate",
     duration: "4 years",
     description: "Mechanics, thermodynamics, materials, and manufacturing.",
-    careers: ["Design Engineer", "Automotive Engineer"],
+    routeId: "mechanical-engineering",
+    hasCareerMapping: true, // Will be added later
   },
   {
     id: 3,
@@ -47,7 +52,8 @@ const COURSES: Course[] = [
     level: "Undergraduate",
     duration: "5.5 years",
     description: "Intensive medical program covering diagnosis and treatment.",
-    careers: ["Physician", "Surgeon"],
+    routeId: "mbbs",
+    hasCareerMapping: false,
   },
   {
     id: 4,
@@ -57,7 +63,8 @@ const COURSES: Course[] = [
     duration: "3 years",
     description:
       "Studio practice across painting, sculpture, and digital arts.",
-    careers: ["Artist", "Art Director", "Illustrator"],
+    routeId: "bfa-visual-arts",
+    hasCareerMapping: false,
   },
   {
     id: 5,
@@ -66,7 +73,8 @@ const COURSES: Course[] = [
     level: "Undergraduate",
     duration: "3 years",
     description: "Accounting, markets, taxation, and corporate finance.",
-    careers: ["Financial Analyst", "Accountant"],
+    routeId: "bcom-finance",
+    hasCareerMapping: false,
   },
   {
     id: 6,
@@ -75,7 +83,8 @@ const COURSES: Course[] = [
     level: "Diploma",
     duration: "1 year",
     description: "Frontend and backend fundamentals for modern web apps.",
-    careers: ["Frontend Dev", "Full-stack Dev"],
+    routeId: "web-development-diploma",
+    hasCareerMapping: false,
   },
   {
     id: 7,
@@ -84,7 +93,8 @@ const COURSES: Course[] = [
     level: "Certification",
     duration: "6 months",
     description: "Branding, layout, and digital design tools.",
-    careers: ["Graphic Designer", "UI Designer"],
+    routeId: "graphic-design",
+    hasCareerMapping: false,
   },
   {
     id: 8,
@@ -93,7 +103,8 @@ const COURSES: Course[] = [
     level: "Undergraduate",
     duration: "3 years",
     description: "Business administration, marketing, and operations.",
-    careers: ["Operations Manager", "Marketing Exec"],
+    routeId: "bba",
+    hasCareerMapping: false,
   },
 ];
 
@@ -107,15 +118,16 @@ const STREAMS: ("All" | Stream)[] = [
 ];
 
 export default function CourseExplorer() {
+  const navigate = useNavigate();
   const { recommended } = useRecommendation();
   const [stream, setStream] = useState<(typeof STREAMS)[number]>("All");
   const [open, setOpen] = useState(false);
 
   // Apply recommendation as default filter if present
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (recommended) setStream(recommended as any);
   }, [recommended]);
+  
   const [selected, setSelected] = useState<Course | null>(null);
 
   const filtered = useMemo(
@@ -123,6 +135,23 @@ export default function CourseExplorer() {
       COURSES.filter((c) => (stream === "All" ? true : c.stream === stream)),
     [stream],
   );
+
+  const handleCourseClick = (course: Course) => {
+    if (course.hasCareerMapping && course.routeId) {
+      // Navigate to career mapping page
+      navigate(`/career-mapping/${course.routeId}`);
+    } else {
+      // Show dialog for courses without career mapping
+      setSelected(course);
+      setOpen(true);
+    }
+  };
+
+  const navigateToCareerMapping = (course: Course) => {
+    if (course.routeId) {
+      navigate(`/career-mapping/${course.routeId}`);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -168,13 +197,9 @@ export default function CourseExplorer() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((course) => (
-          <button
+          <div
             key={course.id}
-            onClick={() => {
-              setSelected(course);
-              setOpen(true);
-            }}
-            className="group rounded-2xl border bg-card text-card-foreground p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+            className="group rounded-2xl border bg-card text-card-foreground p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">{course.title}</h3>
@@ -191,10 +216,45 @@ export default function CourseExplorer() {
                 {course.duration}
               </span>
             </div>
-          </button>
+            
+            {/* Action buttons */}
+            <div className="mt-4 flex gap-2">
+              {course.hasCareerMapping ? (
+                <Button 
+                  onClick={() => handleCourseClick(course)}
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700"
+                  size="sm"
+                >
+                  <Briefcase className="w-4 h-4 mr-2" />
+                  View Career Paths
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              ) : (
+                <>
+                  <Button 
+                    onClick={() => handleCourseClick(course)}
+                    variant="outline"
+                    className="flex-1"
+                    size="sm"
+                  >
+                    View Details
+                  </Button>
+                  <Button 
+                    onClick={() => handleCourseClick(course)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs text-muted-foreground"
+                  >
+                    Career paths coming soon
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
         ))}
       </div>
 
+      {/* Dialog for courses without career mapping */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-lg">
           {selected && (
@@ -208,21 +268,28 @@ export default function CourseExplorer() {
               <div className="mt-2 text-sm text-card-foreground">
                 {selected.description}
               </div>
-              <div className="mt-4">
-                <div className="mb-2 flex items-center gap-2 text-sm font-medium">
-                  <Briefcase className="h-4 w-4" /> Career paths
-                </div>
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {selected.careers.map((c) => (
-                    <li
-                      key={c}
-                      className="rounded-md border bg-secondary px-3 py-2 text-sm text-card-foreground"
-                    >
-                      {c}
-                    </li>
-                  ))}
-                </ul>
+              <div className="mt-6 flex gap-3">
+                <Button 
+                  onClick={() => setOpen(false)}
+                  variant="outline" 
+                  className="flex-1"
+                >
+                  Close
+                </Button>
+                <Button 
+                  onClick={() => {
+                    setOpen(false);
+                    // You can add logic here to navigate to college listings
+                    // navigate(`/colleges/${selected.routeId}`);
+                  }}
+                  className="flex-1 bg-indigo-600 hover:bg-indigo-700"
+                >
+                  Find Colleges
+                </Button>
               </div>
+              <p className="mt-2 text-xs text-muted-foreground text-center">
+                Detailed career mapping for this course will be available soon.
+              </p>
             </>
           )}
         </DialogContent>
