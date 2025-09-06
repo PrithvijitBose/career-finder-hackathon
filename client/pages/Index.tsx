@@ -26,8 +26,8 @@ export default function Home({ onStartQuiz }: { onStartQuiz?: () => void }) {
   return (
     <div className="bg-gradient-to-b from-background to-secondary/40">
       <section className="relative overflow-hidden">
-        {/* mouse-following glow */}
-        <MouseGradient />
+     
+        
         <ParallaxY range={50}>
           <div
             aria-hidden
