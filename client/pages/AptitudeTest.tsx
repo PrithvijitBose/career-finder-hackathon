@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { Progress } from "@/components/ui/progress";
+import { Progress } from "../components/ui/progress";
 import { ArrowLeft, ArrowRight, GraduationCap, RefreshCw } from "lucide-react";
-import type { Stream } from "@/types/streams";
-import { useRecommendation } from "@/context/recommendation";
+import type { Stream } from "../types/streams";
+import { useRecommendation } from "../context/recommendation";
 import { motion } from "framer-motion";
 
 type Question = {
