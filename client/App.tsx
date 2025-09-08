@@ -28,10 +28,11 @@ import { useEffect, useMemo, useState } from "react";
 import { RecommendationProvider } from "./context/recommendation";
 import { UserProvider } from "./context/user";
 import { useUser } from "./context/user";
-import AI from "./pages/AI";
 // Import your existing Computer Science component
 import CSECareerMapping from "./Courses/ComputerScience";
 import MechanicalEngineerMapping from "./Courses/MechanicalEngineer";
+import CollegeQuery from "./AI/collegequery";
+
 
 const queryClient = new QueryClient();
 
@@ -118,6 +119,8 @@ function AppShell() {
       CourseExplorer: "/courses",
       CollegeDirectory: "/colleges",
       UserProfile: "/profile",
+      
+      
     };
     navigate(routeMap[page]);
   };
@@ -198,7 +201,7 @@ function AppShell() {
                 />
               }
             />
-            <Route path="/ai" element={<AI />} />
+            <Route path="/ai" element={<CollegeQuery />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </motion.div>
