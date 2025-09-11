@@ -1,17 +1,35 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import faiss, json, numpy as np
-from sentence_transformers import SentenceTransformer
-from ollama import Client
-import ollama
+import json
 import os
 import uvicorn
 
+# Make ML imports optional
+try:
+    import faiss
+    import numpy as np
+    from sentence_transformers import SentenceTransformer
+    ML_AVAILABLE = True
+    print("✅ ML libraries loaded successfully")
+except ImportError as e:
+    ML_AVAILABLE = False
+    print(f"⚠️ ML libraries not available: {e}")
+    print("Running in API-only mode")
+
+# Ollama imports
+try:
+    from ollama import Client
+    import ollama
+    OLLAMA_AVAILABLE = True
+    print("✅ Ollama library loaded successfully")
+except ImportError as e:
+    OLLAMA_AVAILABLE = False
+    print(f"⚠️ Ollama library not available: {e}")
 
 app = FastAPI()
 
-# Enable CORS (important for frontend calls)
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -43,15 +61,31 @@ CRITICAL_QUESTIONS = [
 # ------------------------
 # Resource Loading
 # ------------------------
-try:
-    index = faiss.read_index("govt_colleges_index.faiss")
-    with open("processed_college_docs.json", "r", encoding="utf-8") as f:
-        docs = json.load(f)
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-    client = Client()
-    print("✅ All resources loaded successfully")
-except Exception as e:
-    print(f"❌ Error loading resources: {e}")
+index = None
+docs = None
+model = None
+client = None
+
+# Load ML resources if available
+if ML_AVAILABLE:
+    try:
+        index = faiss.read_index("govt_colleges_index.faiss")
+        with open("processed_college_docs.json", "r", encoding="utf-8") as f:
+            docs = json.load(f)
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+        print("✅ FAISS index and documents loaded successfully")
+    except Exception as e:
+        print(f"❌ Error loading ML resources: {e}")
+        ML_AVAILABLE = False
+
+# Load Ollama client if available
+if OLLAMA_AVAILABLE:
+    try:
+        client = Client()
+        print("✅ Ollama client loaded successfully")
+    except Exception as e:
+        print(f"❌ Error loading Ollama client: {e}")
+        OLLAMA_AVAILABLE = False
 
 # ------------------------
 # Helper to normalize Ollama responses
@@ -97,6 +131,12 @@ def ask_college(request: QueryRequest):
     try:
         print(f"🔍 Received query: {request.query} in mode: {request.mode}")
 
+        if not ML_AVAILABLE or not model or not index or not docs:
+            raise HTTPException(
+                status_code=503, 
+                detail="ML services not available. Vector search is disabled."
+            )
+
         # Vector search
         query_vec = model.encode([request.query])
         D, I = index.search(np.array(query_vec, dtype="float32"), 3)
@@ -108,7 +148,14 @@ def ask_college(request: QueryRequest):
         if request.mode == "search":
             return {"results": retrieved_docs}
 
-        # AI mode
+        # AI mode - requires both ML and Ollama
+        if not OLLAMA_AVAILABLE or not client:
+            return {
+                "results": retrieved_docs,
+                "answer": "AI chat is not available, but here are the search results.",
+                "metadata": {"error": "Ollama not available"}
+            }
+
         context = "\n\n".join(
             [f"College {i+1}: {doc['content'][:300]}" for i, doc in enumerate(retrieved_docs[:2])]
         )
@@ -138,12 +185,28 @@ def get_critical_questions():
 
 @app.get("/health")
 def health():
-      return {"status": "healthy"}
+    return {
+        "status": "healthy",
+        "ml_available": ML_AVAILABLE,
+        "ollama_available": OLLAMA_AVAILABLE,
+        "services": {
+            "faiss_index": index is not None,
+            "documents": docs is not None,
+            "sentence_transformer": model is not None,
+            "ollama_client": client is not None
+        }
+    }
 
 @app.post("/critical-qa")
 def evaluate_answers(request: QARequest):
     """Evaluate user answers using Ollama"""
     try:
+        if not OLLAMA_AVAILABLE or not client:
+            raise HTTPException(
+                status_code=503,
+                detail="Ollama service not available"
+            )
+
         formatted = "\n".join([f"Q: {q}\nA: {a}" for q, a in request.answers.items()])
         prompt = (
             "You are an evaluator. Based on the following Q&A from a student, "
@@ -174,6 +237,9 @@ def evaluate_answers(request: QARequest):
 def test_ollama():
     """Debug endpoint to test Ollama directly"""
     try:
+        if not OLLAMA_AVAILABLE:
+            return {"success": False, "error": "Ollama library not available"}
+        
         response = ollama.generate(
             model="llama3.2:1b", prompt='Say "test successful" and nothing else.'
         )
@@ -189,8 +255,21 @@ def ping():
 def root():
     return {"message": "College AI API is running"}
 
+@app.get("/status")
+def status():
+    """Debug endpoint to check what's available"""
+    return {
+        "ml_libraries": ML_AVAILABLE,
+        "ollama_available": OLLAMA_AVAILABLE,
+        "resources_loaded": {
+            "faiss_index": index is not None,
+            "documents": docs is not None,  
+            "sentence_transformer": model is not None,
+            "ollama_client": client is not None
+        }
+    }
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
-
 # Run with: uvicorn backend:app --reload --port 8000
