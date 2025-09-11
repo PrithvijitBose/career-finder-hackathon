@@ -1,21 +1,16 @@
-FROM python:3.10-slim
+# Use a pre-built image with ML libraries
+FROM pytorch/pytorch:2.0.1-py3.10-cpu
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# Install only the additional packages we need
+RUN pip install --no-cache-dir \
+    fastapi \
+    uvicorn[standard] \
+    sentence-transformers==5.1.0 \
+    faiss-cpu==1.12.0 \
+    ollama
 
-# Set working directory
 WORKDIR /app
-
-# Copy requirements and install all dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
 COPY . .
 
 EXPOSE 8000
-
 CMD ["python", "backend.py"]
