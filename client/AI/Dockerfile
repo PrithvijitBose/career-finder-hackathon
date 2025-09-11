@@ -9,10 +9,7 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Install PyTorch CPU version first
-RUN pip install --no-cache-dir torch==2.8.0 --index-url https://download.pytorch.org/whl/cpu
-
-# Copy requirements and install other dependencies
+# Copy requirements and install all dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -21,5 +18,4 @@ COPY . .
 
 EXPOSE 8000
 
-# Run Python directly
 CMD ["python", "backend.py"]
