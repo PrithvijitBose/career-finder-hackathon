@@ -28,7 +28,7 @@ if query:
     
     try:
         response = client.chat(
-            model="llama2",  # Using Llama 2 which requires less memory
+            model="llama3.2:1b",  # Using Llama3.2:1b which requires less memory
             messages=[{"role": "user", "content": prompt}]
         )
         
@@ -45,7 +45,7 @@ if query:
         
     except Exception as e:
         st.error(f"Error generating response: {str(e)}")
-        st.info("Make sure Ollama is running and the 'llama2' model is available.")
+        st.info("Make sure Ollama is running and the 'llama3.2:1b' model is available.")
     
     # Show references
     st.subheader("References")
