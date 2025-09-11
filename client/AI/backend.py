@@ -5,6 +5,9 @@ import faiss, json, numpy as np
 from sentence_transformers import SentenceTransformer
 from ollama import Client
 import ollama
+import os
+import uvicorn
+
 
 app = FastAPI()
 
@@ -185,5 +188,9 @@ def ping():
 @app.get("/")
 def root():
     return {"message": "College AI API is running"}
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
 
 # Run with: uvicorn backend:app --reload --port 8000
