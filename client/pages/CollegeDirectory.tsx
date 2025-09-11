@@ -6,53 +6,130 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Building2, MapPin, Search } from "lucide-react";
+import { Building2, MapPin, Search, ExternalLink } from "lucide-react";
 import { useRecommendation } from "@/context/recommendation";
 import type { Stream } from "@/types/streams";
 
 export type College = {
   id: number;
   name: string;
-  district: string;
+  state: string;
   streams: string[];
-  rating: number;
+  website: string;
 };
 
 const COLLEGES: College[] = [
   {
     id: 1,
-    name: "Indigo Institute of Technology",
-    district: "Bengaluru",
-    streams: ["Engineering", "IT"],
-    rating: 4.5,
+    name: "IIT Kharagpur",
+    state: "West Bengal",
+    streams: ["Engineering"],
+    website: "https://www.iitkgp.ac.in/",
   },
   {
     id: 2,
-    name: "Evergreen Medical College",
-    district: "Pune",
-    streams: ["Medicine"],
-    rating: 4.3,
+    name: "IIT Bombay",
+    state: "Maharashtra",
+    streams: ["Engineering"],
+    website: "https://www.iitb.ac.in/",
   },
   {
     id: 3,
-    name: "Riverside College of Arts",
-    district: "Kolkata",
-    streams: ["Arts", "Design"],
-    rating: 4.1,
+    name: "NIT Durgapur",
+    state: "West Bengal",
+    streams: ["Engineering"],
+    website: "https://www.nitdgp.ac.in/",
   },
   {
     id: 4,
-    name: "Summit School of Business",
-    district: "Mumbai",
-    streams: ["Commerce"],
-    rating: 4.2,
+    name: "Jadavpur University",
+    state: "West Bengal",
+    streams: ["Engineering","IT"],
+    website: "https://www.jaduniv.edu.in/",
   },
   {
     id: 5,
-    name: "Northern Polytechnic",
-    district: "Delhi",
+    name: "College of Engineering, Guindy (CEG) - Anna University",
+    state: "Tamil Nadu",
     streams: ["Engineering", "IT"],
-    rating: 4.0,
+    website: "https://www.annauniv.edu/",
+  },
+  {
+    id: 6,
+    name: "COEP Technological University ",
+    state: "Maharashtra",
+    streams: ["Engineering"],
+    website: "https://www.coep.org.in/",
+  },
+  {
+    id: 7,
+    name: "Government College of Engineering & Textile Technology",
+    state: "West Bengal",
+    streams: ["Engineering", "IT"],
+    website: "https://www.gcetts.ac.in/",
+  },
+  {
+    id: 8,
+    name: "Government College of Engineering & Leather Technology (GCELT)",
+    state: "West Bengal",
+    streams: ["Engineering", "IT"],
+    website: "https://www.gcelt.gov.in/",
+  },
+  {
+    id: 9,
+    name: "Kalyani Government Engineering College (KGEC)",
+    state: "West Bengal",
+    streams: ["Engineering"],
+    website: "https://www.kgec.edu.in/",
+  },
+  {
+    id: 10,
+    name: "IIEST Shibpur",
+    state: "West Bengal",
+    streams: ["Engineering","IT"],
+    website: "https://www.iiests.ac.in/",
+  },
+  {
+    id: 11,
+    name: "Medical College, Kolkata",
+    state: "West Bengal",
+    streams: ["Medicine"],
+    website: "https://www.medicalcollegekolkata.in/",
+  },
+  {
+    id: 12,
+    name: "Nil Ratan Sircar Medical College",
+    state: "West Bengal",
+    streams: ["Medicine"],
+    website: "https://nrsmc.edu.in/",
+  },
+  {
+    id: 13,
+    name: "RG Kar Medical College & Hospital, Kolkata",
+    state: "West Bengal",
+    streams: ["Medicine"],
+    website: "https://rgkarmch.in/",
+  },
+  {
+    id: 14,
+    name: "Calcutta National Medical College",
+    state: "West Bengal",
+    streams: ["Medicine"],
+    website: "https://www.cnmckolkata.com/",
+  },
+  {
+    id: 15,
+    name: "Burdwan Medical College",
+    state: "West Bengal",
+    streams: ["Medicine"],
+    website: "https://bmcgov.com/",
+  },
+  {
+    id: 16,
+    name: "Barasat Medical College",
+    state: "West Bengal",
+    streams: ["Medicine"],
+    website: "https://barasatgmch.ac.in/",
   },
 ];
 
@@ -70,10 +147,15 @@ export default function CollegeDirectory() {
     const q = query.toLowerCase();
     return base.filter(
       (c) =>
-        c.district.toLowerCase().includes(q) ||
+        c.state.toLowerCase().includes(q) ||
         c.name.toLowerCase().includes(q),
     );
   }, [query, recommended]);
+
+  const handleCollegeClick = (college: College) => {
+    // Open college website in new tab
+    window.open(college.website, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
@@ -86,7 +168,7 @@ export default function CollegeDirectory() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by district or name"
+            placeholder="Search by state, name, or stream (e.g., 'Medical')"
             className="w-72 rounded-md border bg-card pl-9 pr-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-400"
           />
         </div>
@@ -110,21 +192,20 @@ export default function CollegeDirectory() {
         {filtered.map((col) => (
           <button
             key={col.id}
-            onClick={() => {
-              setSelected(col);
-              setOpen(true);
-            }}
-            className="rounded-2xl border bg-card text-card-foreground p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+            onClick={() => handleCollegeClick(col)}
+            className="rounded-2xl border bg-card text-card-foreground p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg group"
           >
-            <div className="text-lg font-semibold">{col.name}</div>
-            <div className="mt-1 text-sm text-muted-foreground">
-              {col.district}
-            </div>
-            <div className="mt-2 text-xs text-muted-foreground">
-              Streams: {col.streams.join(", ")}
-            </div>
-            <div className="mt-3 inline-flex rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300">
-              Rating: {col.rating.toFixed(1)}
+            <div className="flex items-start justify-between">
+              <div className="flex-1">
+                <div className="text-lg font-semibold">{col.name}</div>
+                <div className="mt-1 text-sm text-muted-foreground">
+                  {col.state}
+                </div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  Streams: {col.streams.join(", ")}
+                </div>
+              </div>
+              <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-indigo-600 transition-colors" />
             </div>
           </button>
         ))}
@@ -136,16 +217,24 @@ export default function CollegeDirectory() {
             <>
               <DialogHeader>
                 <DialogTitle>{selected.name}</DialogTitle>
-                <DialogDescription>{selected.district}</DialogDescription>
+                <DialogDescription>{selected.state}</DialogDescription>
               </DialogHeader>
               <div className="mt-2 text-sm">
                 Streams offered: {selected.streams.join(", ")}
               </div>
               <div className="mt-2 inline-flex items-center gap-2 text-sm text-card-foreground">
-                <MapPin className="h-4 w-4" /> District: {selected.district}
+                <MapPin className="h-4 w-4" /> State: {selected.state}
               </div>
-              <div className="mt-2 text-sm">
-                Rating: {selected.rating.toFixed(1)} / 5
+              <div className="mt-4">
+                <a
+                  href={selected.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition-colors"
+                >
+                  Visit Website
+                  <ExternalLink className="h-4 w-4" />
+                </a>
               </div>
             </>
           )}
