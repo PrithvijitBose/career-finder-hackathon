@@ -28,7 +28,7 @@ if query:
     
     try:
         response = client.chat(
-            model="llama2",  # Using Llama 2 which requires less memory
+            model="llama3.2:1b",  # Using Llama 3.2:1b which requires less memory
             messages=[{"role": "user", "content": prompt}]
         )
         
