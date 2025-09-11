@@ -9,7 +9,13 @@ export type AppPage =
   | "AptitudeTest"
   | "CourseExplorer"
   | "CollegeDirectory"
-  | "UserProfile";
+  | "UserProfile"
+  | "About"
+  | "AI"
+
+
+  
+
 
 const navItems: { label: string; page: AppPage; path: string }[] = [
   { label: "Home", page: "Home", path: "/" },
