@@ -32,6 +32,7 @@ import { useUser } from "./context/user";
 import CSECareerMapping from "./Courses/ComputerScience";
 import MechanicalEngineerMapping from "./Courses/MechanicalEngineer";
 import CollegeQuery from "./AI/collegequery";
+import About from "./pages/about";
 
 
 const queryClient = new QueryClient();
@@ -98,7 +99,7 @@ function AppShell() {
       "/courses": "CourseExplorer",
       "/colleges": "CollegeDirectory",
       "/profile": "UserProfile",
-      "/about": "Home",
+      "/about": "About",
       "/contact": "Home",
       "/privacy": "Home",
     };
@@ -119,6 +120,8 @@ function AppShell() {
       CourseExplorer: "/courses",
       CollegeDirectory: "/colleges",
       UserProfile: "/profile",
+      About: "/about",
+      AI: "/ai",
       
       
     };
@@ -174,15 +177,7 @@ function AppShell() {
             
             <Route path="/colleges" element={<CollegeDirectory />} />
             <Route path="/profile" element={<Profile />} />
-            <Route
-              path="/about"
-              element={
-                <PlaceholderPage
-                  title="About"
-                  description="Learn more about CareerPath Finder."
-                />
-              }
-            />
+           <Route path="/about" element={<About />} />
             <Route
               path="/contact"
               element={
