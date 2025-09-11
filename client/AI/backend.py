@@ -133,6 +133,10 @@ def get_critical_questions():
     """Send predefined critical questions"""
     return {"questions": CRITICAL_QUESTIONS}
 
+@app.get("/health")
+def health():
+      return {"status": "healthy"}
+
 @app.post("/critical-qa")
 def evaluate_answers(request: QARequest):
     """Evaluate user answers using Ollama"""
