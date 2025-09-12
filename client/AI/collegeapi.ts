@@ -11,6 +11,8 @@ export interface AskResponse {
 }
 
 export const askCollege = async (query: string, mode: "search" | "ai"): Promise<AskResponse> => {
-  const res = await axios.post<AskResponse>("https://your-app.railway.app/ask", { query, mode });
+  const res = await axios.post<AskResponse>("http://localhost:8000/ask", { query, mode });
   return res.data;
 };
+
+// https://your-app.railway.app/ask
