@@ -94,16 +94,158 @@ This should start:
 
 ## 📁 Project Structure
 
-```
-career-finder-hackathon/
-├── src/                    # React + TypeScript frontend
-├── server/                 # Express.js backend
-├── api/                    # FastAPI Python backend
-├── models/                 # ML models and related files
-├── public/                 # Static assets
-├── package.json           # Node.js dependencies
-├── requirements.txt       # Python dependencies
-└── README.md             # You are here!
+```text
+├── .builder/
+│   └── rules/
+│       ├── deploy-app.mdc
+│       └── organize-ui.mdc
+├── .dockerignore
+├── .env
+├── .gitignore
+├── .npmrc
+├── .prettierrc
+├── AGENTS.md
+├── Readme.md
+├── client/
+│   ├── AI/
+│   │   ├── .railwayignore
+│   │   ├── Dockerfile
+│   │   ├── Generation.py
+│   │   ├── Procfile
+│   │   ├── Retrival.py
+│   │   ├── VectorDB.py
+│   │   ├── __pycache__/
+│   │   │   ├── backend.cpython-310.pyc
+│   │   │   └── backend.cpython-313.pyc
+│   │   ├── backend.py
+│   │   ├── college.ts
+│   │   ├── collegeapi.ts
+│   │   ├── collegequery.tsx
+│   │   ├── govt_colleges_index.faiss
+│   │   ├── govt_engineering_colleges.json
+│   │   ├── original_college_data.json
+│   │   ├── processed_college_docs.json
+│   │   ├── railway.toml
+│   │   └── requirements.txt
+│   ├── App.tsx
+│   ├── Courses/
+│   │   ├── ComputerScience.tsx
+│   │   └── MechanicalEngineer.tsx
+│   ├── components/
+│   │   ├── effects/
+│   │   │   ├── Magnetic.tsx
+│   │   │   ├── MouseGradient.tsx
+│   │   │   ├── Parallax.tsx
+│   │   │   ├── ScrollReveal.tsx
+│   │   │   └── TiltCard.tsx
+│   │   ├── layout/
+│   │   │   ├── Footer.tsx
+│   │   │   └── Header.tsx
+│   │   └── ui/
+│   │       ├── accordion.tsx
+│   │       ├── alert-dialog.tsx
+│   │       ├── alert.tsx
+│   │       ├── aspect-ratio.tsx
+│   │       ├── avatar.tsx
+│   │       ├── badge.tsx
+│   │       ├── breadcrumb.tsx
+│   │       ├── button.tsx
+│   │       ├── calendar.tsx
+│   │       ├── card.tsx
+│   │       ├── carousel.tsx
+│   │       ├── chart.tsx
+│   │       ├── checkbox.tsx
+│   │       ├── collapsible.tsx
+│   │       ├── command.tsx
+│   │       ├── context-menu.tsx
+│   │       ├── dialog.tsx
+│   │       ├── drawer.tsx
+│   │       ├── dropdown-menu.tsx
+│   │       ├── form.tsx
+│   │       ├── hover-card.tsx
+│   │       ├── input-otp.tsx
+│   │       ├── input.tsx
+│   │       ├── label.tsx
+│   │       ├── menubar.tsx
+│   │       ├── navigation-menu.tsx
+│   │       ├── pagination.tsx
+│   │       ├── popover.tsx
+│   │       ├── progress.tsx
+│   │       ├── radio-group.tsx
+│   │       ├── resizable.tsx
+│   │       ├── scroll-area.tsx
+│   │       ├── select.tsx
+│   │       ├── separator.tsx
+│   │       ├── sheet.tsx
+│   │       ├── sidebar.tsx
+│   │       ├── skeleton.tsx
+│   │       ├── slider.tsx
+│   │       ├── sonner.tsx
+│   │       ├── switch.tsx
+│   │       ├── table.tsx
+│   │       ├── tabs.tsx
+│   │       ├── textarea.tsx
+│   │       ├── toast.tsx
+│   │       ├── toaster.tsx
+│   │       ├── toggle-group.tsx
+│   │       ├── toggle.tsx
+│   │       ├── tooltip.tsx
+│   │       └── use-toast.ts
+│   ├── context/
+│   │   ├── recommendation.tsx
+│   │   └── user.tsx
+│   ├── global.css
+│   ├── hooks/
+│   │   ├── use-mobile.tsx
+│   │   ├── use-theme.ts
+│   │   └── use-toast.ts
+│   ├── lib/
+│   │   ├── utils.spec.ts
+│   │   └── utils.ts
+│   ├── pages/
+│   │   ├── AI.tsx
+│   │   ├── AptitudeTest.tsx
+│   │   ├── CareerMapping.tsx
+│   │   ├── CollegeDirectory.tsx
+│   │   ├── CourseExplorer.tsx
+│   │   ├── Index.tsx
+│   │   ├── Login.tsx
+│   │   ├── Logout.tsx
+│   │   ├── NotFound.tsx
+│   │   ├── Placeholder.tsx
+│   │   ├── Profile.tsx
+│   │   └── about.tsx
+│   ├── types/
+│   │   └── streams.ts
+│   └── vite-env.d.ts
+├── components.json
+├── index.html
+├── netlify.toml
+├── netlify/
+│   └── functions/
+│       └── api.ts
+├── package-lock.json
+├── package.json
+├── pip.conf
+├── pnpm-lock.yaml
+├── postcss.config.js
+├── public/
+│   ├── favicon.ico
+│   ├── placeholder.svg
+│   └── robots.txt
+├── railway.toml
+├── server/
+│   ├── index.ts
+│   ├── node-build.ts
+│   └── routes/
+│       └── demo.ts
+├── shared/
+│   └── api.ts
+├── tailwind.config.ts
+├── tsconfig.json
+├── vercel.json
+├── vite.config.server.ts
+└── vite.config.ts
 ```
 
 ## 🤝 Contributing
