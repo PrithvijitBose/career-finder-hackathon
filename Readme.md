@@ -303,7 +303,7 @@ pip install -r requirements.txt
 ```
 
 **3. Port conflicts**
-- Frontend usually runs on port 5173
+- Frontend runs on port 8080
 - Backend ports are configurable in environment variables
 - Check if ports are already in use
 
@@ -317,8 +317,7 @@ npm install
 ## 📞 Support
 
 - **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/PrithvijitBose/career-finder-hackathon/issues)
-- **Discussions**: Join conversations in [GitHub Discussions](https://github.com/PrithvijitBose/career-finder-hackathon/discussions)
-- **Email**: [Contact the maintainer](mailto:your-email@example.com)
+
 
 ## 📄 License
 
