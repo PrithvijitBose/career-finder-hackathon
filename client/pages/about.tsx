@@ -338,7 +338,7 @@ const About = () => {
                   <thead>
                     <tr className="border-b border-gray-600">
                       <th className="pb-4 px-6 text-xl font-bold text-cyan-400 w-1/3">Feature</th>
-                      <th className="pb-4 px-6 text-xl font-bold text-green-400 w-1/3">CareerPath (Our App)</th>
+                      <th className="pb-4 px-6 text-xl font-bold text-green-400 w-1/3">Vortex (Our App)</th>
                       <th className="pb-4 px-6 text-lg text-gray-400 w-1/3">Competitors</th>
                     </tr>
                   </thead>

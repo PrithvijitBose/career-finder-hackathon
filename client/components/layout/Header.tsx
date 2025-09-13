@@ -64,7 +64,7 @@ export function Header({
               <GraduationCap className="h-5 w-5" />
             </span>
             <span className="font-extrabold tracking-tight text-lg sm:text-xl">
-              CareerPath Finder
+              Vortex
             </span>
           </Link>
 

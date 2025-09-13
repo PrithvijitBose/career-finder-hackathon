@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-sm text-foreground/60">
-            © {new Date().getFullYear()} CareerPath Finder
+            © {new Date().getFullYear()} Vortex
           </p>
           <nav className="flex items-center gap-6 text-sm text-foreground/70">
             <Link to="/about" className="hover:text-foreground/90">
